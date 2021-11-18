@@ -122,7 +122,7 @@ https://towardsdatascience.com/tensorflow-gpu-installation-made-easy-use-conda-i
  black GTSRB_model_training_evaluation.py
  ```
  
-If you wish to use change the dataset used here change the following to correctly reflect the directory in `CatsVSDogs-Dataload.py`:
+If you wish to use change the dataset used here change the following to correctly reflect the directory in `GTSRB_Classification_setup.py`:
 
 `data_dir_train = r"C:\Users\Desktop\Desktop\JuPyter Notebooks\data\Roadsigns\Train"`
 
@@ -130,7 +130,7 @@ If you wish to use change the dataset used here change the following to correctl
 
 
 
-NOTE: This was trained on a 2080Super using tensorflow GPU, images were resized to fit vram constraints. Training will take longer on GPUs not running CUDA, on CPUs and if larger datasets are used.
+NOTE: This was trained on a 2080Super using tensorflow GPU, images were resized to fit vram constraints. 
 
 ### Reference: 
 
