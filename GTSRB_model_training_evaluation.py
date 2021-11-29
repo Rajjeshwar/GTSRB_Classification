@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+
 
 
 import tensorflow as tf
@@ -33,7 +33,7 @@ from numpy import save
 from numpy import load
 
 
-# In[2]:
+
 
 
 def load_dataset():
@@ -52,7 +52,6 @@ def load_dataset():
     return X_train, Y_train, X_test, Y_test, string_class_labels, X_val, Y_val
 
 
-# In[3]:
 
 
 X_train, Y_train, X_test, Y_test, string_class_labels, X_val, Y_val = load_dataset()
@@ -60,7 +59,7 @@ X_train, Y_train, X_test, Y_test, string_class_labels, X_val, Y_val = load_datas
 
 # ### Image augmentation parameters
 
-# In[4]:
+
 
 
 datagen = ImageDataGenerator(
@@ -77,14 +76,14 @@ datagen = ImageDataGenerator(
 
 # ### Model and training
 
-# In[5]:
+
 
 
 input_shape = X_train.shape[1:]
 model_input = Input(shape=input_shape)
 
 
-# In[6]:
+
 
 
 def func_cnn(model_input):
@@ -111,13 +110,13 @@ def func_cnn(model_input):
     return cnn_model
 
 
-# In[7]:
+
 
 
 conv_pool_cnn_model = func_cnn(model_input)
 
 
-# In[8]:
+
 
 
 def train(model, loss, optimizer, metrics, batch_size, epochs):
@@ -130,7 +129,7 @@ def train(model, loss, optimizer, metrics, batch_size, epochs):
     return history
 
 
-# In[9]:
+
 
 
 history_cnn = train(
@@ -140,7 +139,7 @@ history_cnn = train(
 
 # ### Plotting the loss and the accuracy
 
-# In[10]:
+
 
 
 plt.plot(history_cnn.history["accuracy"])
@@ -149,13 +148,13 @@ plt.plot(history_cnn.history["loss"])
 plt.legend(["accuracy", "val_accuracy", "loss"])
 
 
-# In[11]:
+
 
 
 conv_pool_cnn_model.summary()
 
 
-# In[12]:
+
 
 
 score_cnn = conv_pool_cnn_model.evaluate(X_test, Y_test)
@@ -163,13 +162,13 @@ score_cnn = conv_pool_cnn_model.evaluate(X_test, Y_test)
 
 # ### Calculating log loss for CNN model
 
-# In[13]:
+
 
 
 pred_Cnn = conv_pool_cnn_model.predict(X_test)
 
 
-# In[14]:
+
 
 
 log_loss_score = metrics.log_loss(Y_test, pred_Cnn)
@@ -178,19 +177,19 @@ print("Log loss score: {}".format(log_loss_score))
 
 # ### Confusion matrix
 
-# In[15]:
+
 
 
 classes_x = np.argmax(pred_Cnn, axis=1)
 
 
-# In[16]:
+
 
 
 cf = confusion_matrix(Y_test, classes_x)
 
 
-# In[17]:
+
 
 
 df_cm = pd.DataFrame(cf, index=string_class_labels, columns=string_class_labels)
@@ -200,7 +199,7 @@ sns.heatmap(df_cm, annot=True)
 
 # ### Classification report
 
-# In[18]:
+
 
 
 print(classification_report(Y_test, classes_x))
@@ -208,7 +207,7 @@ print(classification_report(Y_test, classes_x))
 
 # ## Using transfer learning on VGG19
 
-# In[19]:
+
 
 
 def func_transfer(model_input):
@@ -236,13 +235,13 @@ def func_transfer(model_input):
     return vg_model
 
 
-# In[20]:
+
 
 
 vgg19_transfer_model = func_transfer(model_input)
 
 
-# In[21]:
+
 
 
 history_vg = train(
@@ -250,13 +249,12 @@ history_vg = train(
 )
 
 
-# In[22]:
 
 
 vgg19_transfer_model.summary()
 
 
-# In[23]:
+
 
 
 plt.plot(history_vg.history["accuracy"])
@@ -265,7 +263,7 @@ plt.plot(history_vg.history["loss"])
 plt.legend(["accuracy", "val_accuracy", "loss"])
 
 
-# In[24]:
+
 
 
 score_vg = vgg19_transfer_model.evaluate(X_test, Y_test)
@@ -273,13 +271,13 @@ score_vg = vgg19_transfer_model.evaluate(X_test, Y_test)
 
 # ### Log loss for vgg19 transfer architecture model
 
-# In[25]:
+
 
 
 pred_vg = vgg19_transfer_model.predict(X_test)
 
 
-# In[26]:
+
 
 
 log_loss_score_vg = metrics.log_loss(Y_test, pred_vg)
@@ -288,7 +286,7 @@ print("Log loss score: {}".format(log_loss_score_vg))
 
 # ### Confusion matrix for vgg19 model
 
-# In[27]:
+
 
 
 classes_x_vg = np.argmax(pred_vg, axis=1)
@@ -301,7 +299,7 @@ sns.heatmap(df_cm_vg, annot=True)
 
 # ### Classification report
 
-# In[28]:
+
 
 
 print(classification_report(Y_test, classes_x_vg))
@@ -309,7 +307,7 @@ print(classification_report(Y_test, classes_x_vg))
 
 # ### Average ensemble model
 
-# In[31]:
+
 
 
 def ensemble_model(model_1, model_2):
@@ -324,13 +322,13 @@ def ensemble_model(model_1, model_2):
     return ensemble_model
 
 
-# In[32]:
+
 
 
 ensemble_model = ensemble_model(conv_pool_cnn_model, vgg19_transfer_model)
 
 
-# In[33]:
+
 
 
 ensemble_model.summary()
@@ -338,7 +336,7 @@ ensemble_model.summary()
 
 # ### Training
 
-# In[34]:
+
 
 
 history_ensemble = train(
@@ -348,13 +346,13 @@ history_ensemble = train(
 
 # ### Evaluate and predict on test set
 
-# In[35]:
+
 
 
 score_ensemble = ensemble_model.evaluate(X_test, Y_test)
 
 
-# In[36]:
+
 
 
 pred_ens = ensemble_model.predict(X_test)
@@ -362,7 +360,7 @@ pred_ens = ensemble_model.predict(X_test)
 
 # ### Log loss
 
-# In[37]:
+
 
 
 log_loss_score_ens = metrics.log_loss(Y_test, pred_ens)
@@ -371,7 +369,7 @@ print("Log loss score: {}".format(log_loss_score_ens))
 
 # ### Soft voting
 
-# In[38]:
+
 
 
 ### Here we predict the output based on the max probability for each class label obtained by combining the outputs of the CNN and the VG16 based model
@@ -381,4 +379,4 @@ log_loss_softvoting = metrics.log_loss(Y_test, softvoting)
 print("Log loss score: {}".format(log_loss_softvoting))
 
 
-# In[ ]:
+
