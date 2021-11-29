@@ -121,6 +121,14 @@ https://towardsdatascience.com/tensorflow-gpu-installation-made-easy-use-conda-i
  black GTSRB_Classification_setup.py
  black GTSRB_model_training_evaluation.py
  ```
+ ## Dataset download 
+ 
+ A drive link to the dataset is shared below as it exceeds the maximum capacity of Github. To resuse the same dataset please extract the folders and place them in the appropriate directory and change the strings mentioned below to reflect the path.
+ 
+ ```
+ https://drive.google.com/drive/folders/1j-owBjyGfrds2OrYNQhfL5Ztp-dzx4iU?usp=sharing
+
+ ```
  
 If you wish to use change the dataset used here change the following to correctly reflect the directory in `GTSRB_Classification_setup.py`:
 
