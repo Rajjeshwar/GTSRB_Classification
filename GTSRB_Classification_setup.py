@@ -3,7 +3,7 @@
 
 # ### Import libraries
 
-# In[18]:
+
 
 
 import numpy as np
@@ -21,7 +21,7 @@ from imgaug import augmenters as iaa
 
 # ### Load data
 
-# In[19]:
+
 
 
 classes = []
@@ -43,7 +43,7 @@ def data_loading():
     return classes, data_dir_train, data_dir_test, string_class_labels
 
 
-# In[20]:
+
 
 
 classes, data_dir_train, data_dir_test, string_class_labels = data_loading()
@@ -51,7 +51,7 @@ classes, data_dir_train, data_dir_test, string_class_labels = data_loading()
 
 # ### Data distribution
 
-# In[21]:
+
 
 
 def check_distribution(classes):
@@ -63,13 +63,13 @@ def check_distribution(classes):
     return class_distribution_dict
 
 
-# In[22]:
+
 
 
 dct = check_distribution(classes)
 
 
-# In[23]:
+
 
 
 def plot_distribution(dct):
@@ -78,7 +78,7 @@ def plot_distribution(dct):
     plt.show()
 
 
-# In[24]:
+
 
 
 plot_distribution(dct)
@@ -86,7 +86,7 @@ plot_distribution(dct)
 
 # ### Visualize
 
-# In[25]:
+
 
 
 for clas in classes:
@@ -99,14 +99,14 @@ for clas in classes:
     break
 
 
-# In[26]:
+
 
 
 img_size = 32
 new_array = cv2.resize(img_array, (img_size, img_size))
 
 
-# In[27]:
+
 
 
 plt.imshow(cv2.cvtColor(new_array, cv2.COLOR_BGR2RGB))
@@ -115,7 +115,7 @@ plt.show()
 
 # ### Create train and test set
 
-# In[ ]:
+
 
 
 training_data = []
@@ -140,7 +140,7 @@ def create_training_data():
 create_training_data()
 
 
-# In[ ]:
+
 
 
 test_data = []
@@ -165,7 +165,7 @@ def create_test_data():
 create_test_data()
 
 
-# In[30]:
+
 
 
 def data_prep(train, test):
@@ -194,7 +194,7 @@ def data_prep(train, test):
     return X_train, Y_train, X_test, Y_test
 
 
-# In[31]:
+
 
 
 X_train, Y_train, X_test, Y_test = data_prep(training_data, test_data)
@@ -202,7 +202,7 @@ X_train, Y_train, X_test, Y_test = data_prep(training_data, test_data)
 
 # ### Save data
 
-# In[32]:
+
 
 
 def save_data():
@@ -215,7 +215,7 @@ def save_data():
 
 # ### Unit Test
 
-# In[33]:
+
 
 
 class Test(unittest.TestCase):
@@ -236,7 +236,7 @@ if __name__ == "__main__":
     unittest.main(argv=["first-arg-is-ignored"], exit=False)
 
 
-# In[34]:
+
 
 
 save_data()
